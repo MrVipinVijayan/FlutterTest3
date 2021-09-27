@@ -20,7 +20,7 @@ class AppError extends StatelessWidget {
               message ?? '',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 color: Colors.red,
               ),
             ),

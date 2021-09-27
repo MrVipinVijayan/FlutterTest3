@@ -29,7 +29,7 @@ class AppContactListRow extends StatelessWidget {
           elevation: 1.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(3.0),
+              Radius.circular(6.0),
             ),
           ),
           color: Colors.white,

@@ -6,6 +6,8 @@ import 'package:visa_test/components/app_profile_tile.dart';
 import 'package:visa_test/constants/color_constants.dart';
 import 'package:visa_test/constants/constants.dart';
 import 'package:visa_test/models/contact_model.dart';
+import 'package:visa_test/utils/dialog_utils.dart';
+import 'package:visa_test/utils/utils.dart';
 import 'package:visa_test/view_models/contact_bloc.dart';
 import 'package:visa_test/view_models/contact_state.dart';
 
@@ -19,6 +21,7 @@ class ViewContactDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: AppTxt(
           text: '${selectedContact.firstName} ${selectedContact.lastName}',
+          fontSize: 20.0,
           color: appWhite,
         ),
         leading: AppIconBtn(
@@ -37,6 +40,7 @@ class ViewContactDetailsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView(
+                  shrinkWrap: true,
                   children: [
                     SizedBox(height: 10.0),
                     BlocBuilder<ContactBloc, ContactState>(
@@ -63,6 +67,16 @@ class ViewContactDetailsScreen extends StatelessWidget {
                               AppProfileListTile(
                                 title: "Phone Number",
                                 value: selectedContact.phoneNumber,
+                                onTap: () async {
+                                  bool launched = await Utils.launchPhoneDialer(
+                                      selectedContact.phoneNumber);
+                                  if (!launched) {
+                                    DialogUtils.showSnackBar(
+                                      message:
+                                          'Sorry, Failed to open Phone Dialer',
+                                    );
+                                  }
+                                },
                               )
                             ],
                           ),

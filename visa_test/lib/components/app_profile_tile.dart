@@ -13,6 +13,7 @@ class AppProfileListTile extends StatelessWidget {
   final FontWeight? valueBold;
   final double? titleFontSize;
   final double? valueFontSize;
+  final Function? onTap;
   AppProfileListTile({
     required this.title,
     required this.value,
@@ -22,6 +23,7 @@ class AppProfileListTile extends StatelessWidget {
     this.valueBold,
     this.titleFontSize,
     this.valueFontSize,
+    this.onTap,
   });
   @override
   Widget build(BuildContext context) {
@@ -46,11 +48,20 @@ class AppProfileListTile extends StatelessWidget {
                   fontSize: titleFontSize ?? 16.0,
                 ),
                 SizedBox(height: 10.0),
-                AppTxt(
-                  text: value ?? '',
-                  color: appBlack,
-                  fontWeight: titleBold ?? FontWeight.normal,
-                  fontSize: titleFontSize ?? 20.0,
+                Material(
+                  child: InkWell(
+                    splashColor: Theme.of(context).primaryColor,
+                    highlightColor: Theme.of(context).primaryColor,
+                    onTap: () async {
+                      if (null != onTap) onTap!();
+                    },
+                    child: AppTxt(
+                      text: value ?? '',
+                      color: appBlack,
+                      fontWeight: titleBold ?? FontWeight.normal,
+                      fontSize: titleFontSize ?? 20.0,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 10.0),
               ],
@@ -60,12 +71,14 @@ class AppProfileListTile extends StatelessWidget {
             visible: editMode,
             child: Column(
               children: [
-                AppTF(
-                  hintText: title,
-                  initialValue: value ?? '',
-                  onTextChanged: (val) {
-                    if (null != onNewText) onNewText!(val);
-                  },
+                Container(
+                  child: AppTF(
+                    hintText: title,
+                    initialValue: value ?? '',
+                    onTextChanged: (val) {
+                      if (null != onNewText) onNewText!(val);
+                    },
+                  ),
                 ),
                 SizedBox(height: 15.0),
               ],

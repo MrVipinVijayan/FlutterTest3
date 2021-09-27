@@ -1,4 +1,4 @@
-bool logEnabled = false;
+bool logEnabled = true;
 
 log(dynamic data) {
   if (null == data) {

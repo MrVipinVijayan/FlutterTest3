@@ -4,9 +4,10 @@ import 'package:visa_test/components/app_error_component.dart';
 import 'package:visa_test/components/app_txt.dart';
 import 'package:visa_test/components/app_contact_list_row.dart';
 import 'package:visa_test/components/app_loading.dart';
+import 'package:visa_test/constants/constants.dart';
 import 'package:visa_test/models/contact_model.dart';
 import 'package:visa_test/utils/dialog_utils.dart';
-import 'package:visa_test/utils/screen_utils.dart';
+import 'package:visa_test/utils/navigation_utils.dart';
 import 'package:visa_test/view_models/contact_bloc.dart';
 import 'package:visa_test/view_models/contact_events.dart';
 import 'package:visa_test/view_models/contact_state.dart';
@@ -15,11 +16,11 @@ class ContactsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        elevation: 1,
+        elevation: 0,
         title: AppTxt(
           text: 'Contacts',
           fontSize: 20.0,
@@ -48,7 +49,6 @@ class ContactsHome extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_contact',
-        // backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(
           Icons.add_outlined,
           color: Colors.white,
@@ -56,6 +56,7 @@ class ContactsHome extends StatelessWidget {
         onPressed: () async {
           BlocProvider.of<ContactBloc>(context).add(ClearAddContactEvent());
           openContactAddScreen();
+          DialogUtils.hideSnackBar();
         },
       ),
     );
@@ -97,7 +98,6 @@ class ContactsHome extends StatelessWidget {
                     child: AppTxt(
                       text: 'No Contacts',
                       color: Theme.of(context).backgroundColor,
-                      onTap: () async {},
                     ),
                   );
                 }
@@ -107,7 +107,7 @@ class ContactsHome extends StatelessWidget {
             },
           ),
         ),
-        Container(height: 100),
+        SizedBox(height: 100),
       ],
     );
   }
@@ -125,12 +125,15 @@ class ContactsHome extends StatelessWidget {
           contact: contact,
           onTap: () async {
             _onContactSelected(context, contact);
+            DialogUtils.hideSnackBar();
           },
           onEditTap: () async {
             _onContactEditTap(context, contact);
+            DialogUtils.hideSnackBar();
           },
           onDelete: () async {
             _onDeleteTap(context, contact);
+            DialogUtils.hideSnackBar();
           },
         );
       },
@@ -144,7 +147,7 @@ class ContactsHome extends StatelessWidget {
   _onDeleteTap(BuildContext context, Contact contact) async {
     DialogUtils.showTwoBtnBottomSheet(context,
         message:
-            "Are you sure you want to delete contact '${contact.firstName} ${contact.lastName}'",
+            "$DELETE_CONFIRMATION '${contact.firstName} ${contact.lastName}'",
         okCallback: () async {
       Navigator.pop(context);
       BlocProvider.of<ContactBloc>(context).add(DeleteContactEvent(contact));

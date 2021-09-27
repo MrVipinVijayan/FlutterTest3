@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:visa_test/utils/screen_utils.dart';
+import 'package:visa_test/constants/constants.dart';
+import 'package:visa_test/utils/navigation_utils.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:visa_test/view_models/contact_bloc.dart';
 import 'package:visa_test/view_models/contact_events.dart';
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    timeDilation = 1.2;
+    timeDilation = APP_ANIMATION_TIME_DIALATION;
     loadContacts();
   }
 

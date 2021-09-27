@@ -37,17 +37,21 @@ class Utils {
     });
   }
 
-  static Future<void> launchPhoneDialer(String? contactNumber) async {
+  static Future<bool> launchPhoneDialer(String? contactNumber) async {
     if (null == contactNumber || contactNumber.isEmpty) {
       log('No Contact Number');
-      return;
+      return false;
     }
     final Uri _phoneUri = Uri(scheme: "tel", path: contactNumber);
     try {
-      if (await canLaunch(_phoneUri.toString()))
+      if (await canLaunch(_phoneUri.toString())) {
         await launch(_phoneUri.toString());
+        return true;
+      }
+      return false;
     } catch (error) {
       log('Cannot Dial');
+      return false;
     }
   }
 }

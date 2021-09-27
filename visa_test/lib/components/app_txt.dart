@@ -10,7 +10,6 @@ class AppTxt extends StatelessWidget {
     this.color,
     this.fontWeight,
     this.lines,
-    this.onTap,
     this.lineHeight,
   });
   final int? lines;
@@ -20,7 +19,6 @@ class AppTxt extends StatelessWidget {
   final Alignment? parentAlignment;
   final double? fontSize;
   final Color? color;
-  final Function? onTap;
   final double? lineHeight;
 
   @override

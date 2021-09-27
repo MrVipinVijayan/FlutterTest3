@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:visa_test/components/app_icon_btn.dart';
 import 'package:visa_test/components/app_error_component.dart';
 import 'package:visa_test/components/app_global_widget.dart';
+import 'package:visa_test/components/app_tf.dart';
 import 'package:visa_test/components/app_txt.dart';
-import 'package:visa_test/components/app_profile_tile.dart';
 import 'package:visa_test/constants/color_constants.dart';
 import 'package:visa_test/utils/dialog_utils.dart';
 import 'package:visa_test/view_models/contact_bloc.dart';
@@ -46,74 +46,73 @@ class AddContactScreen extends StatelessWidget {
         ],
       ),
       body: AppGlobalWidget(
-        child: Column(
-          children: [
-            BlocListener(
-              bloc: BlocProvider.of<ContactBloc>(context),
-              listener: (context, state) {
-                if (state is AddContactSuccessState) {
-                  Navigator.pop(context);
-                }
-              },
-              child: BlocBuilder<ContactBloc, ContactState>(
-                builder: (BuildContext context, ContactState state) {
-                  if (state is AddContactInvalidState) {
-                    return AppError(message: state.message);
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          color: Colors.white,
+          child: Column(
+            children: [
+              BlocListener(
+                bloc: BlocProvider.of<ContactBloc>(context),
+                listener: (context, state) {
+                  if (state is AddContactSuccessState) {
+                    Navigator.pop(context);
                   }
-                  return Container();
                 },
+                child: BlocBuilder<ContactBloc, ContactState>(
+                  builder: (BuildContext context, ContactState state) {
+                    if (state is AddContactInvalidState) {
+                      return AppError(message: state.message);
+                    }
+                    return Container();
+                  },
+                ),
               ),
-            ),
-            Hero(
-              tag: 'add_contact',
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  SizedBox(height: 20.0),
-                  AppProfileListTile(
-                    title: "First Name",
-                    value: null,
-                    editMode: true,
-                    onNewText: (val) async {
-                      BlocProvider.of<ContactBloc>(context)
-                          .newContact
-                          .firstName = val;
-                    },
-                  ),
-                  AppProfileListTile(
-                    title: "Last Name",
-                    value: null,
-                    editMode: true,
-                    onNewText: (val) async {
-                      BlocProvider.of<ContactBloc>(context)
-                          .newContact
-                          .lastName = val;
-                    },
-                  ),
-                  AppProfileListTile(
-                    title: "Email",
-                    value: null,
-                    editMode: true,
-                    onNewText: (val) async {
-                      BlocProvider.of<ContactBloc>(context)
-                          .newContact
-                          .emailAddress = val;
-                    },
-                  ),
-                  AppProfileListTile(
-                    title: "Phone Number",
-                    value: null,
-                    editMode: true,
-                    onNewText: (val) async {
-                      BlocProvider.of<ContactBloc>(context)
-                          .newContact
-                          .phoneNumber = val;
-                    },
-                  )
-                ],
+              Hero(
+                tag: 'add_contact',
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    AppTF(
+                      hintText: 'First Name',
+                      onTextChanged: (val) async {
+                        BlocProvider.of<ContactBloc>(context)
+                            .newContact
+                            .firstName = val;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+                    AppTF(
+                      hintText: 'Last Name',
+                      onTextChanged: (val) async {
+                        BlocProvider.of<ContactBloc>(context)
+                            .newContact
+                            .lastName = val;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+                    AppTF(
+                      hintText: 'Email',
+                      onTextChanged: (val) async {
+                        BlocProvider.of<ContactBloc>(context)
+                            .newContact
+                            .emailAddress = val;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+                    AppTF(
+                      hintText: 'Phone Number',
+                      textInputType: TextInputType.phone,
+                      onTextChanged: (val) async {
+                        BlocProvider.of<ContactBloc>(context)
+                            .newContact
+                            .phoneNumber = val;
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

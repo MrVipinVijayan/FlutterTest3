@@ -82,13 +82,15 @@ class DialogUtils {
               child: Row(
                 children: [
                   Spacer(),
-                  AppTxt(
-                    text: actionText,
-                    color: Colors.white,
+                  InkWell(
                     onTap: () async {
                       hideSnackBar();
                       if (null != onOkayCalback) onOkayCalback();
                     },
+                    child: AppTxt(
+                      text: actionText,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(width: 20.0),
                 ],

@@ -24,6 +24,7 @@ class EditContactScreen extends StatelessWidget {
         centerTitle: true,
         title: AppTxt(
           text: '${selectedContact.firstName} ${selectedContact.lastName}',
+          fontSize: 20.0,
           color: Colors.white,
         ),
         leading: AppIconBtn(
@@ -51,75 +52,78 @@ class EditContactScreen extends StatelessWidget {
         ],
       ),
       body: AppGlobalWidget(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            SizedBox(height: 20.0),
-            BlocBuilder(
-              bloc: BlocProvider.of<ContactBloc>(context),
-              builder: (context, state) {
-                if (state is AddContactInvalidState) {
-                  return AppError(message: state.message);
-                }
-                return Container();
-              },
-            ),
-            BlocListener(
-              bloc: BlocProvider.of<ContactBloc>(context),
-              listener: (context, state) {
-                if (state is UpdateSuccessState) {
-                  DialogUtils.showSnackBar(message: 'Contact Updated');
-                  Navigator.pop(context);
-                }
-              },
-              child: BlocBuilder<ContactBloc, ContactState>(
+        child: Container(
+          color: Colors.white,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              SizedBox(height: 20.0),
+              BlocBuilder(
                 bloc: BlocProvider.of<ContactBloc>(context),
-                builder: (BuildContext context, ContactState state) {
-                  return Hero(
-                    tag: 'contact_${selectedContact.id}',
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        AppProfileListTile(
-                          title: "First Name",
-                          value: selectedContact.firstName,
-                          editMode: true,
-                          onNewText: (val) async {
-                            selectedContact.firstName = val;
-                          },
-                        ),
-                        AppProfileListTile(
-                          title: "Last Name",
-                          value: selectedContact.lastName,
-                          editMode: true,
-                          onNewText: (val) async {
-                            selectedContact.lastName = val;
-                          },
-                        ),
-                        AppProfileListTile(
-                          title: "Email",
-                          value: selectedContact.emailAddress,
-                          editMode: true,
-                          onNewText: (val) async {
-                            selectedContact.emailAddress = val;
-                          },
-                        ),
-                        AppProfileListTile(
-                          title: "Phone Number",
-                          value: selectedContact.phoneNumber,
-                          editMode: true,
-                          onNewText: (val) async {
-                            selectedContact.phoneNumber = val;
-                          },
-                        ),
-                        SizedBox(height: 10.0),
-                      ],
-                    ),
-                  );
+                builder: (context, state) {
+                  if (state is AddContactInvalidState) {
+                    return AppError(message: state.message);
+                  }
+                  return Container();
                 },
               ),
-            )
-          ],
+              BlocListener(
+                bloc: BlocProvider.of<ContactBloc>(context),
+                listener: (context, state) {
+                  if (state is UpdateSuccessState) {
+                    DialogUtils.showSnackBar(message: 'Contact Updated');
+                    Navigator.pop(context);
+                  }
+                },
+                child: BlocBuilder<ContactBloc, ContactState>(
+                  bloc: BlocProvider.of<ContactBloc>(context),
+                  builder: (BuildContext context, ContactState state) {
+                    return Hero(
+                      tag: 'contact_${selectedContact.id}',
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          AppProfileListTile(
+                            title: "First Name",
+                            value: selectedContact.firstName,
+                            editMode: true,
+                            onNewText: (val) async {
+                              selectedContact.firstName = val;
+                            },
+                          ),
+                          AppProfileListTile(
+                            title: "Last Name",
+                            value: selectedContact.lastName,
+                            editMode: true,
+                            onNewText: (val) async {
+                              selectedContact.lastName = val;
+                            },
+                          ),
+                          AppProfileListTile(
+                            title: "Email",
+                            value: selectedContact.emailAddress,
+                            editMode: true,
+                            onNewText: (val) async {
+                              selectedContact.emailAddress = val;
+                            },
+                          ),
+                          AppProfileListTile(
+                            title: "Phone Number",
+                            value: selectedContact.phoneNumber,
+                            editMode: true,
+                            onNewText: (val) async {
+                              selectedContact.phoneNumber = val;
+                            },
+                          ),
+                          SizedBox(height: 10.0),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
