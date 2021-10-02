@@ -49,7 +49,7 @@ class AddContactScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20.0),
           color: Colors.white,
-          child: Column(
+          child: ListView(
             children: [
               BlocListener(
                 bloc: BlocProvider.of<ContactBloc>(context),

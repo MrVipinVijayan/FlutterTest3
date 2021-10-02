@@ -7,6 +7,7 @@ import 'package:visa_test/constants/color_constants.dart';
 import 'package:visa_test/constants/constants.dart';
 import 'package:visa_test/models/contact_model.dart';
 import 'package:visa_test/utils/dialog_utils.dart';
+import 'package:visa_test/utils/navigation_utils.dart';
 import 'package:visa_test/utils/utils.dart';
 import 'package:visa_test/view_models/contact_bloc.dart';
 import 'package:visa_test/view_models/contact_state.dart';
@@ -26,11 +27,26 @@ class ViewContactDetailsScreen extends StatelessWidget {
         ),
         leading: AppIconBtn(
           iconData: Icons.arrow_back_ios_new,
-          iconColor: appWhite,
+          iconColor: Colors.white,
           onTap: () async {
             Navigator.pop(context);
           },
         ),
+        actions: [
+          AppIconBtn(
+            iconData: Icons.edit_outlined,
+            onTap: () async {
+              Contact tempContact = Contact.copyWith(
+                id: selectedContact.id,
+                firstName: selectedContact.firstName,
+                lastName: selectedContact.lastName,
+                phoneNumber: selectedContact.phoneNumber,
+                emailAddress: selectedContact.emailAddress,
+              );
+              openContactEditScreen(selectedContact: tempContact);
+            },
+          ),
+        ],
       ),
       body: Hero(
         tag: 'contact_${selectedContact.id}',

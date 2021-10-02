@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:visa_test/components/app_error_component.dart';
+import 'package:visa_test/components/app_global_widget.dart';
 import 'package:visa_test/components/app_txt.dart';
 import 'package:visa_test/components/app_contact_list_row.dart';
 import 'package:visa_test/components/app_loading.dart';
@@ -16,8 +17,9 @@ class ContactsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      resizeToAvoidBottomInset: false,
+      // backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -46,7 +48,7 @@ class ContactsHome extends StatelessWidget {
         ],
       ),
       body: _body(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         heroTag: 'add_contact',
         child: const Icon(
